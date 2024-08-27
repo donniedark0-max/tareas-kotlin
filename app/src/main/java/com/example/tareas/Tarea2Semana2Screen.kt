@@ -31,6 +31,8 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.automirrored.filled.ArrowBackIos
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.ui.platform.LocalContext
 
 
@@ -64,36 +66,56 @@ fun Tarea2Semana2Screen(navController: NavController = rememberNavController()) 
             OutlinedTextField(
                 value = cuotaMensual,
                 onValueChange = { cuotaMensual = it },
-                label = { Text("Cuota Mensual") },
+                label = { Text("Cuota Mensual",
+                    color = Color.Black
+                ) },
                 keyboardOptions = KeyboardOptions
                     (keyboardType = KeyboardType.Number),
-                modifier = Modifier.fillMaxWidth()
-            )
+                modifier = Modifier.fillMaxWidth(),
+                colors = OutlinedTextFieldDefaults.colors(
+                    unfocusedTextColor = Color.Black,
+                    focusedTextColor = Color.Black,
+                )
+                )
 
             OutlinedTextField(
                 value = tasaAnual,
                 onValueChange = { tasaAnual = it },
-                label = { Text("Tasa Anual (%)") },
+                label = { Text("Tasa Anual (%)",
+                    color = Color.Black
+                ) },
                 keyboardOptions = KeyboardOptions
                     (keyboardType = KeyboardType.Number),
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                colors = OutlinedTextFieldDefaults.colors(
+                    unfocusedTextColor = Color.Black,
+                    focusedTextColor = Color.Black,
+                )
             )
 
             OutlinedTextField(
                 value = tiempo,
                 onValueChange = { tiempo = it },
-                label = { Text("Tiempo (meses)") },
+                label = { Text("Tiempo (meses)",
+                    color = Color.Black
+                ) },
                 keyboardOptions = KeyboardOptions
                     (keyboardType = KeyboardType.Number),
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                colors = OutlinedTextFieldDefaults.colors(
+                    unfocusedTextColor = Color.Black,
+                    focusedTextColor = Color.Black,
+                )
             )
 
 
             Button(
                 onClick = {
                     if (cuotaMensual.isNotEmpty() && tasaAnual.isNotEmpty() && tiempo.isNotEmpty() &&
-                        cuotaMensual.all { it.isDigit() } && tasaAnual.all { it.isDigit() } && tiempo.all { it.isDigit() }
-                    ) {
+                        cuotaMensual.matches(Regex("[0-9]+(\\.[0-9]+)?")) && // Expresión regular para números con decimales
+                        tasaAnual.matches(Regex("-?[0-9]+(\\.[0-9]+)?")) &&
+                        tiempo.all { it.isDigit() }
+                        ) {
                     val cuotaMensualFloat = cuotaMensual.toFloatOrNull() ?: 0f
                     val tasaAnualFloat = tasaAnual.toFloatOrNull() ?: 0f
                     val tiempoInt = tiempo.toIntOrNull() ?: 0
@@ -114,11 +136,12 @@ fun Tarea2Semana2Screen(navController: NavController = rememberNavController()) 
                 ),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(2.dp, top=20.dp)
+                    .padding(2.dp, top = 20.dp)
             ) {
                 Text(
                     "Calcular",
-                    style = MaterialTheme.typography.bodyLarge
+                    style = MaterialTheme.typography.bodyLarge,
+                    fontWeight = FontWeight.Bold
                 )
             }
 

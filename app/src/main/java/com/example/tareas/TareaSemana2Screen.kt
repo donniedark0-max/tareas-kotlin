@@ -20,6 +20,7 @@ import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -75,28 +76,46 @@ fun TareaSemana2Screen(navController: NavController = rememberNavController()) {
             OutlinedTextField(
                 value = precio,
                 onValueChange = { precio = it },
-                label = { Text("Precio") },
+                label = { Text("Precio",
+                    color = Color.Black
+                ) },
                 keyboardOptions = KeyboardOptions
                     (keyboardType = KeyboardType.Number),
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                colors = OutlinedTextFieldDefaults.colors(
+                    unfocusedTextColor = Color.Black,
+                    focusedTextColor = Color.Black,
+                )
             )
 
             OutlinedTextField(
                 value = tasaAnual,
                 onValueChange = { tasaAnual = it },
-                label = { Text("Tasa Anual (%)") },
+                label = { Text("Tasa Anual (%)",
+                        color = Color.Black
+                    )},
                 keyboardOptions = KeyboardOptions
                     (keyboardType = KeyboardType.Number),
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                colors = OutlinedTextFieldDefaults.colors(
+                    unfocusedTextColor = Color.Black,
+                    focusedTextColor = Color.Black,
+                )
             )
 
             OutlinedTextField(
                 value = tiempo,
                 onValueChange = { tiempo = it },
-                label = { Text("Tiempo (meses)") },
+                label = { Text("Tiempo (meses)",
+                    color = Color.Black
+                ) },
                 keyboardOptions = KeyboardOptions
                     (keyboardType = KeyboardType.Number),
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                colors = OutlinedTextFieldDefaults.colors(
+                    unfocusedTextColor = Color.Black,
+                    focusedTextColor = Color.Black,
+                )
             )
 
             Row(
@@ -107,7 +126,28 @@ fun TareaSemana2Screen(navController: NavController = rememberNavController()) {
             ) {
                 Checkbox(
                     checked = mostrarDecimales,
-                    onCheckedChange = { mostrarDecimales = it }
+                    onCheckedChange = { isChecked ->
+                        mostrarDecimales = isChecked
+                        if (tasaMensual.isNotEmpty() && cuotaMensual.isNotEmpty()) { // Verifica si ya se calcularon
+                            val precioFloat = precio.toFloatOrNull() ?: 0f
+                            val tasaAnualFloat = tasaAnual.toFloatOrNull() ?: 0f
+                            val tiempoInt = tiempo.toIntOrNull() ?:0
+
+                            val tem = calcularTEM(tasaAnualFloat)
+                            tasaMensual = if (mostrarDecimales) {
+                                String.format("%.2f", tem * 100) + "%"
+                            } else {
+                                "${(tem * 100).roundToInt()}%"
+                            }
+
+                            val cuota = calcularCuotaMensual(precioFloat, tem, tiempoInt)
+                            cuotaMensual = if (mostrarDecimales) {
+                                String.format("%.2f", cuota)
+                            } else {
+                                "${cuota.roundToInt()}"
+                            }
+                        }
+                    }
                 )
                 Icon(
                     imageVector = Icons.Filled.StarBorder, // Reemplaza con el ícono que desees
@@ -123,9 +163,12 @@ fun TareaSemana2Screen(navController: NavController = rememberNavController()) {
 
             Button(
                 onClick = {
-                    if (precio.isNotEmpty() && tasaAnual.isNotEmpty() && tiempo.isNotEmpty() &&
-                        precio.all { it.isDigit() } && tasaAnual.all { it.isDigit() } && tiempo.all { it.isDigit() }
-                    ) {
+                    if (precio.isNotEmpty() && tasaAnual.isNotEmpty() && tiempo.isNotEmpty()  &&
+                        precio.matches(Regex("[0-9]+(\\.[0-9]+)?")) && // Expresión regular para números con decimales
+                        tasaAnual.matches(Regex("-?[0-9]+(\\.[0-9]+)?")) &&
+                        tiempo.all { it.isDigit() }
+                        )
+                    {
                 //codigo para la logica de la tasa efectiva mensual
                     val precioFloat = precio.toFloatOrNull() ?: 0f
                     val tasaAnualFloat = tasaAnual.toFloatOrNull() ?: 0f
@@ -159,7 +202,8 @@ fun TareaSemana2Screen(navController: NavController = rememberNavController()) {
                     .padding(2.dp)
             ) {
                 Text("Calcular",
-                    style = MaterialTheme.typography.bodyLarge
+                    style = MaterialTheme.typography.bodyLarge,
+                    fontWeight = FontWeight.Bold
                 )
             }
 
