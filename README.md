@@ -5,7 +5,7 @@ la estructura es simple.
     . 
     ├── Home Screen                       # Pantalla princiapl (MainActivity.kt
     │   ├── Tarea Semana-2 Screen         # Pantalla de la tarea de la semana 2(TareaSemana2Screeen.kt)
-    │   │   └──Tarea 2 Semana-2           # Pantalla de la tarea 2 de la semana 2(Tarea2Semana2Screeen.kt)
+    │   │   └──Tarea 2 Semana-2 Screen    # Pantalla de la tarea 2 de la semana 2(Tarea2Semana2Screeen.kt)
     │   ├── Tarea Semana-3 Screen         # Pantalla de la tarea de la semana 3(TareaSemana3Screeen.kt)
     │   ├── Tarea Semana-4 Screen         # Pantalla de la tarea de la semana 4(TareaSemana4Screeen.kt)
     │   ├── Tarea Semana-5 Screen         # Pantalla de la tarea de la semana 5(TareaSemana5Screeen.kt) 
