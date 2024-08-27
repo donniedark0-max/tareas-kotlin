@@ -106,4 +106,5 @@ dependencies {
     implementation(libs.androidx.runtime.rxjava2)
     implementation(libs.foundation)
     implementation(libs.androidx.navigation.compose.v253)
+    implementation(libs.androidx.core.splashscreen)
 }

@@ -1,5 +1,6 @@
 package com.example.tareas
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -30,6 +31,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.automirrored.filled.ArrowBackIos
+import androidx.compose.ui.platform.LocalContext
 
 
 @Preview(showBackground = true)
@@ -39,6 +41,7 @@ fun Tarea2Semana2Screen(navController: NavController = rememberNavController()) 
     var tasaAnual by remember { mutableStateOf("") }
     var tiempo by remember { mutableStateOf("") }
     var precioActual by remember { mutableStateOf("") }
+    val context = LocalContext.current
 
 // Interfaz de usuario para la tarea 2 de la semana 2
     Surface( //
@@ -61,7 +64,7 @@ fun Tarea2Semana2Screen(navController: NavController = rememberNavController()) 
             OutlinedTextField(
                 value = cuotaMensual,
                 onValueChange = { cuotaMensual = it },
-                label = { Text("Precio") },
+                label = { Text("Cuota Mensual") },
                 keyboardOptions = KeyboardOptions
                     (keyboardType = KeyboardType.Number),
                 modifier = Modifier.fillMaxWidth()
@@ -88,6 +91,9 @@ fun Tarea2Semana2Screen(navController: NavController = rememberNavController()) 
 
             Button(
                 onClick = {
+                    if (cuotaMensual.isNotEmpty() && tasaAnual.isNotEmpty() && tiempo.isNotEmpty() &&
+                        cuotaMensual.all { it.isDigit() } && tasaAnual.all { it.isDigit() } && tiempo.all { it.isDigit() }
+                    ) {
                     val cuotaMensualFloat = cuotaMensual.toFloatOrNull() ?: 0f
                     val tasaAnualFloat = tasaAnual.toFloatOrNull() ?: 0f
                     val tiempoInt = tiempo.toIntOrNull() ?: 0
@@ -96,6 +102,10 @@ fun Tarea2Semana2Screen(navController: NavController = rememberNavController()) 
                     val precioActualFloat = calcularValorPresente(cuotaMensualFloat, tem, tiempoInt)
 
                     precioActual = String.format("%.2f", precioActualFloat)
+                    } else {
+                        // Mostrar un mensaje de error al usuario
+                        Toast.makeText(context, "Por favor, ingrese valores numéricos válidos.", Toast.LENGTH_SHORT).show()
+                    }
                 },
                 shape = RoundedCornerShape(20.dp),
                 colors = ButtonDefaults.buttonColors(

@@ -1,6 +1,7 @@
 [versions]
 activityComposeVersion = "1.9.0"
 agp = "8.5.2"
+coreSplashscreen = "1.0.1"
 foundation = "1.6.8"
 kotlin = "1.9.0"
 coreKtx = "1.13.1"
@@ -19,6 +20,7 @@ appcompat = "1.7.0"
 [libraries]
 androidx-activity-compose-v190 = { module = "androidx.activity:activity-compose", version.ref = "activityComposeVersion" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
 androidx-foundation = { module = "androidx.compose.foundation:foundation" }
 androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleViewmodelCompose" }
 androidx-material = { module = "androidx.compose.material:material" }

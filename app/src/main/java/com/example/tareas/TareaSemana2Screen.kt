@@ -1,6 +1,7 @@
 package com.example.tareas
 
 import android.annotation.SuppressLint
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -29,6 +30,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -48,6 +50,8 @@ fun TareaSemana2Screen(navController: NavController = rememberNavController()) {
     var mostrarDecimales by remember { mutableStateOf(false) }
     var tasaMensual by remember { mutableStateOf("") }
     var cuotaMensual by remember { mutableStateOf("") }
+
+    val context = LocalContext.current
 
 
     // Interfaz de usuario para la tarea semana 2
@@ -119,6 +123,9 @@ fun TareaSemana2Screen(navController: NavController = rememberNavController()) {
 
             Button(
                 onClick = {
+                    if (precio.isNotEmpty() && tasaAnual.isNotEmpty() && tiempo.isNotEmpty() &&
+                        precio.all { it.isDigit() } && tasaAnual.all { it.isDigit() } && tiempo.all { it.isDigit() }
+                    ) {
                 //codigo para la logica de la tasa efectiva mensual
                     val precioFloat = precio.toFloatOrNull() ?: 0f
                     val tasaAnualFloat = tasaAnual.toFloatOrNull() ?: 0f
@@ -136,6 +143,10 @@ fun TareaSemana2Screen(navController: NavController = rememberNavController()) {
                         String.format("%.2f", cuota)
                     } else {
                         "${cuota.roundToInt()}"
+                    }
+                    } else {
+                        // Mostrar un mensaje de error al usuario
+                        Toast.makeText(context, "Por favor, ingrese valores numéricos válidos.", Toast.LENGTH_SHORT).show()
                     }
                 },
                 shape = RoundedCornerShape(20.dp),

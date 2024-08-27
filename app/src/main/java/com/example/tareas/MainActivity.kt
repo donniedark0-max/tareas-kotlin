@@ -61,7 +61,7 @@ fun AppNavigation() {
         composable("tarea_semana_2") { TareaSemana2Screen(navController) }
         composable("tarea_semana_3") { TareaSemana3Screen() }
         composable("tarea_semana_4") { TareaSemana4Screen() }
-        composable("tarea_2_semana_2") { Tarea2Semana2Screen() }       // Agrega más composables para otras tareas
+        composable("tarea_2_semana_2") { Tarea2Semana2Screen(navController) }       // Agrega más composables para otras tareas
     }
 }
 
