@@ -23,6 +23,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+    <activity android:name=".ImprimirActivity"
+        android:theme="@style/Theme.AppCompat.Light"
+        />
+        <activity android:name=".Tarea2ImprimirActivity"
+            android:theme="@style/Theme.AppCompat.Light"
+            />
     </application>
 
 </manifest>

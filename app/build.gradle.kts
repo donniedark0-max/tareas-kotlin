@@ -107,4 +107,6 @@ dependencies {
     implementation(libs.foundation)
     implementation(libs.androidx.navigation.compose.v253)
     implementation(libs.androidx.core.splashscreen)
+
+    implementation(libs.material)
 }

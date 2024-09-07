@@ -1,5 +1,6 @@
 package com.example.tareas
 
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -31,6 +32,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -60,7 +62,8 @@ fun AppNavigation() {
     NavHost(navController = navController, startDestination = "lista_tareas") {
         composable("lista_tareas") { Navigation(navController) }
         composable("tarea_semana_2") { TareaSemana2Screen(navController) }
-        composable("tarea_semana_3") { TareaSemana3Screen() }
+        composable("tarea_semana_3") { TareaSemana3Screen(LocalContext.current, navController) }
+        composable("tarea_2_semana_3") { Tarea2Semana3Screen(LocalContext.current) }
         composable("tarea_semana_4") { TareaSemana4Screen() }
         composable("tarea_2_semana_2") { Tarea2Semana2Screen(navController) }       // Agrega más composables para otras tareas
     }
