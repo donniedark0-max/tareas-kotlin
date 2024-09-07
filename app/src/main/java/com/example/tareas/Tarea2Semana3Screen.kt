@@ -496,6 +496,5 @@ fun validarCampos2(context: Context, alumno: String): Boolean {
         Toast.makeText(context, "El nombre del alumno solo debe contener letras.", Toast.LENGTH_SHORT).show()
         return false
     }
-
     return true
 }
